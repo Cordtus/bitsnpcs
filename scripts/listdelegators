@@ -1,0 +1,5 @@
+#print unique delegations to validator
+#trim output for extremely large delegator counts or struggling rpc --limit <int> [default 100] --page <int> [default 2]
+#add flag -c to end to print delegator count
+
+daemond q staking delegations-to $(daemond keys show <val_key> --bech val --address) | grep "delegator_address"
