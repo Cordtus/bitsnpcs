@@ -1,0 +1,78 @@
+#NODE SERVER
+
+bv@nodev2:~$ hwinfo --short --cpu --disk
+cpu:
+                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 3895 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 4644 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
+disk:
+  /dev/nvme1n1         Kingston Technology Company Disk
+  /dev/nvme0n1         Samsung Electronics NVMe SSD Controller SM981/PM981/PM983
+  /dev/nvme2n1         Samsung Electronics NVMe SSD Controller SM981/PM981/PM983
+  /dev/sdd             Samsung SSD 870
+  /dev/sdb             Samsung SSD 870
+  /dev/sdc             Samsung SSD 870
+  /dev/sda             Samsung SSD 870
+  
+bv@nodev2:~$ hwinfo --memory
+01: None 00.0: 10102 Main Memory
+  [Created at memory.74]
+  Unique ID: rdCR.CxwsZFjVASF
+  Hardware Class: memory
+  Model: "Main Memory"
+  Memory Range: 0x00000000-0xfadcd1fff (rw)
+  Memory Size: 64 GB
+  Config Status: cfg=new, avail=yes, need=no, active=unknown
+  
+bv@nodev2:~$ hwinfo --gfxcard
+17: PCI b00.0: 0300 VGA compatible controller (VGA)
+  [Created at pci.386]
+  Hardware Class: graphics card
+  Model: "nVidia GP107GL [Quadro P400]"
+  Vendor: pci 0x10de "nVidia Corporation"
+  Device: pci 0x1cb3 "GP107GL [Quadro P400]"
+  Driver: "nouveau"
+  Driver Modules: "nouveau"
+  Driver Info #0:
+    Driver Status: nvidiafb is not active
+    Driver Activation Cmd: "modprobe nvidiafb"
+  Driver Info #1:
+    Driver Status: nouveau is active
+    Driver Activation Cmd: "modprobe nouveau"
+  Config Status: cfg=new, avail=yes, need=no, active=unknown
+  Attached to: #7 (PCI bridge)
+  
+bv@nodev2:~$ hwinfo --sys --bios
+01: None 00.0: 10105 BIOS
+  [Created at bios.186]
+  Unique ID: rdCR.lZF+r4EgHp4
+  Hardware Class: bios
+  BIOS Keyboard LED Status:
+    Scroll Lock: off
+    Num Lock: off
+    Caps Lock: off
+  Config Status: cfg=new, avail=yes, need=no, active=unknown
+
+02: None 00.0: 10107 System
+  [Created at sys.64]
+  Unique ID: rdCR.n_7QNeEnh23
+  Hardware Class: system
+  Model: "System"
+  Formfactor: "desktop"
+  Driver Info #0:
+    Driver Status: thermal,fan are not active
+    Driver Activation Cmd: "modprobe thermal; modprobe fan"
+  Config Status: cfg=new, avail=yes, need=no, active=unknown
