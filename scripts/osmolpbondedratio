@@ -1,0 +1,4 @@
+#divide result of query 2 by result of query 1 for bonded ratio
+
+curl https://api.osmosis.interbloc.org/osmosis/gamm/v1beta1/pools/<POOL-ID> | grep "amount" -m1
+curl https://api.osmosis.interbloc.org/osmosis/lockup/v1beta1/locked_denom?denom=gamm/pool/<POOL-ID> | grep "amount" -m1
