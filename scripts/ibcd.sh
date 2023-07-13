@@ -1,5 +1,5 @@
 #!/bin/sh
-#set $IBCD to ibc-port/ibc-channel/native-denom
-#'transfer/channel-0/ujuno' 
+#run with "ibc-port/ibc-channel/native-denom" as an arg
 
+IBCD="$1"
 echo -n $IBCD | openssl dgst -sha256 | awk '{print "ibc/" toupper($2)}'
