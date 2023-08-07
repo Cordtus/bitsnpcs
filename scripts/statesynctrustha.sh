@@ -1,4 +1,5 @@
 #!/bin/bash
-#replace localhost with the RPC node you are using for state sync
-curl -s localhost:26650/block | \
-jq -r '.result.block.header.height + "\n" + .result.block_id.hash'
+#run this script with rpc URL or ip:port as an arg
+#./statesynctrustha.sh https://rpc.nomic-testnet.basementnodes.ca
+RPCADDR=$1
+curl -s $RPCADDR/block | jq -r '.result.block.header.height + "\n" + .result.block_id.hash'
