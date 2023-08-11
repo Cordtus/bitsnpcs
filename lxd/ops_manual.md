@@ -5,6 +5,7 @@
 
 
 ## General config/complementary changes
+[Full bash env files including aliases as shown](https://github.com/Cordtus/bitsnpcs/tree/65a39e97d18037e9b940acac68fc9f360b22b1e8/lxd/bash)
 
 ### `bash_aliases`
 
