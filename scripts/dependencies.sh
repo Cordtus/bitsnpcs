@@ -20,7 +20,7 @@ if ! command -v go &> /dev/null; then
 fi
 source ~/.bashrc
 # check if $GOPATH is already configured
-if  [ ($GOPATH) = "" ]; then
+if  [ ${GOPATH} = "" ]; then
     # Add environment variables to ~/.bashrc
     echo -e "export GOROOT=/usr/local/go\nexport GOPATH=\$HOME/go\nexport GO111MODULE=on\nexport PATH=\$PATH:/usr/local/go/bin:\$HOME/go/bin" >> ~/.bashrc
     source ~/.bashrc
