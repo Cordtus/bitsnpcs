@@ -17,7 +17,10 @@ if ! command -v go &> /dev/null; then
     wget -q https://go.dev/dl/go1.20.linux-amd64.tar.gz
     tar -C /usr/local -xzf go1.20.linux-amd64.tar.gz
     rm go1.20.linux-amd64.tar.gz
-    
+fi
+source ~/.bashrc
+# check if $GOPATH is already configured
+if  [ ($GOPATH) = "" ]; then
     # Add environment variables to ~/.bashrc
     echo -e "export GOROOT=/usr/local/go\nexport GOPATH=\$HOME/go\nexport GO111MODULE=on\nexport PATH=\$PATH:/usr/local/go/bin:\$HOME/go/bin" >> ~/.bashrc
     source ~/.bashrc
