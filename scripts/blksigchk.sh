@@ -1,7 +1,7 @@
 #~/bin/bash
 #query recent blocks signed/absent/other
 #run on validator rpc, checks back as pruning allows
-#usage - script.sh <validator_ip:rpc_port> <blocks_to_check[uint]>
+#usage - script.sh <url/ip:rpc_port> <blocks_to_check[uint]>
 RPCADDR=$1
 BLOCKS_TO_CHECK=$2
 VALIDATOR_ADDR=$(curl -s $RPCADDR/status | jq -r .result.validator_info.address)
