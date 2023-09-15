@@ -20,7 +20,7 @@
 
 ### paste to file like `cert.pem` and use with `-cacert` flag
 
-`grpcurl -H "Content-Type: application/grpc" -d '{"position_id": "145344"}' -cacert /path/to/cert.pem -servername osmosis-grpc.lavenderfive.com -v     osmosis-grpc.lavenderfive.com:443 osmosis.concentratedliquidity.v1beta1.Query/PositionById`
+`grpcurl -H "Content-Type: application/grpc" -d '{"position_id": "<ID>"}' -cacert /path/to/cert.pem -servername osmosis-grpc.lavenderfive.com -v     osmosis-grpc.lavenderfive.com:443 osmosis.concentratedliquidity.v1beta1.Query/PositionById`
 <br>
 
 <br>
