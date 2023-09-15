@@ -46,49 +46,10 @@ disk:
 usb controller:
                        AMD USB Controller
                        AMD Matisse USB 3.0 Host Controller
-bridge:
-                       AMD PCI bridge
-                       AMD Starship/Matisse GPP Bridge
-                       AMD Starship/Matisse PCIe Dummy Host Bridge
-                       AMD Matisse Device 24: Function 3
-                       AMD PCI bridge
-                       AMD Starship/Matisse GPP Bridge
-                       AMD PCI bridge
-                       AMD Matisse Device 24: Function 1
-                       AMD Starship/Matisse PCIe Dummy Host Bridge
-                       AMD Starship/Matisse PCIe Dummy Host Bridge
-                       AMD PCI bridge
-                       AMD FCH LPC Bridge
-                       AMD Starship/Matisse PCIe Dummy Host Bridge
-                       AMD PCI bridge
-                       AMD Matisse Device 24: Function 6
-                       AMD Starship/Matisse Root Complex
-                       AMD Starship/Matisse Internal PCIe GPP Bridge 0 to bus[E:B]
-                       AMD Matisse Device 24: Function 4
-                       AMD Starship/Matisse PCIe Dummy Host Bridge
-                       AMD PCI bridge
-                       AMD Matisse Device 24: Function 2
-                       AMD Starship/Matisse GPP Bridge
-                       AMD PCI bridge
-                       AMD Matisse Device 24: Function 0
-                       AMD PCI bridge
-                       AMD Starship/Matisse Internal PCIe GPP Bridge 0 to bus[E:B]
-                       AMD Starship/Matisse PCIe Dummy Host Bridge
-                       AMD Matisse Device 24: Function 7
-                       AMD Starship/Matisse PCIe Dummy Host Bridge
-                       AMD Matisse Device 24: Function 5
-hub:
-                       Linux Foundation 2.0 root hub
-                       Linux Foundation 3.0 root hub
-                       Linux Foundation 2.0 root hub
-                       Linux Foundation 3.0 root hub
 memory:
-                       Main Memory
+                       Hardware Class: memory
+                       Model: "Main Memory"
+                       Memory Range: 0x00000000-0x1f6d081fff (rw)
+                       Memory Size: 128 GB
 unknown:
-                       AMD Starship/Matisse PCIe Dummy Function
-                       AMD Starship/Matisse Cryptographic Coprocessor PSPCPP
-                       AMD Starship/Matisse IOMMU
-                       AMD Starship/Matisse Reserved SPP
-                       AMD FCH SMBus Controller
-                       ASUSTek AURA LED Controller
   /dev/input/event3    Logitech G513 RGB MECHANICAL GAMING KEYBOARD
