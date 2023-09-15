@@ -1,73 +1,49 @@
-sv@homeserver:~$ hwinfo --short --cpu --disk
 cpu:
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 3600 MHz
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 3954 MHz
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 4033 MHz
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 3266 MHz
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 2929 MHz
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 3762 MHz
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 3363 MHz
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 3805 MHz
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 800 MHz
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 2800 MHz
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 800 MHz
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 800 MHz
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 2800 MHz
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 800 MHz
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 800 MHz
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 3800 MHz
+graphics card:
+                       nVidia VGA compatible controller
+sound:
+                       Intel 9 Series Chipset Family HD Audio Controller
+                       nVidia Audio device
+storage:
+                       Sandisk Non-Volatile memory controller
+                       Intel 9 Series Chipset Family SATA Controller [AHCI Mode]
+                       Kingston Technology Company Non-Volatile memory controller
+network:
+  eno1                 Intel Ethernet Connection (2) I218-V
 disk:
   /dev/nvme0n1         Kingston Technology Company Disk
   /dev/sdd             ST8000DM004-2CX1
   /dev/sdb             TOSHIBA MG07ACA1
-  /dev/sde             ASMT 2115
   /dev/sdc             TOSHIBA MG07ACA1
   /dev/nvme1n1         Sandisk Disk
   /dev/sda             ST8000DM004-2CX1
-  
-sv@homeserver:~$ hwinfo --memory
-01: None 00.0: 10102 Main Memory
-  [Created at memory.74]
-  Unique ID: rdCR.CxwsZFjVASF
-  Hardware Class: memory
-  Model: "Main Memory"
-  Memory Range: 0x00000000-0x7d36d9fff (rw)
-  Memory Size: 32 GB
-  Config Status: cfg=new, avail=yes, need=no, active=unknown
-  
-sv@homeserver:~$ hwinfo --gfxcard
-13: PCI 100.0: 0300 VGA compatible controller (VGA)
-  [Created at pci.386]
-  Hardware Class: graphics card
-  Model: "nVidia VGA compatible controller"
-  Vendor: pci 0x10de "nVidia Corporation"
-  Device: pci 0x1fb1
-  Driver Modules: "nvidia"
-  Driver Info #0:
-    Driver Status: nvidiafb is not active
-    Driver Activation Cmd: "modprobe nvidiafb"
-  Driver Info #1:
-    Driver Status: nouveau is not active
-    Driver Activation Cmd: "modprobe nouveau"
-  Driver Info #2:
-    Driver Status: nvidia_drm is active
-    Driver Activation Cmd: "modprobe nvidia_drm"
-  Driver Info #3:
-    Driver Status: nvidia is active
-    Driver Activation Cmd: "modprobe nvidia"
-  Config Status: cfg=new, avail=yes, need=no, active=unknown
-  Attached to: #11 (PCI bridge)
-
-sv@homeserver:~$ hwinfo --sys --bios
-01: None 00.0: 10105 BIOS
-  [Created at bios.186]
-  Unique ID: rdCR.lZF+r4EgHp4
-  Hardware Class: bios
-  BIOS Keyboard LED Status:
-    Scroll Lock: off
-    Num Lock: off
-    Caps Lock: off
-  Config Status: cfg=new, avail=yes, need=no, active=unknown
-
-02: None 00.0: 10107 System
-  [Created at sys.64]
-  Unique ID: rdCR.n_7QNeEnh23
-  Hardware Class: system
-  Model: "System"
-  Formfactor: "desktop"
-  Driver Info #0:
-    Driver Status: thermal,fan are not active
-    Driver Activation Cmd: "modprobe thermal; modprobe fan"
-  Config Status: cfg=new, avail=yes, need=no, active=unknown
+usb controller:
+                       Intel 9 Series Chipset Family USB EHCI Controller #2
+                       Intel 9 Series Chipset Family USB EHCI Controller #1
+                       Intel 9 Series Chipset Family USB xHCI Controller
+bridge:
+                       Intel 9 Series Chipset Family PCI Express Root Port 1
+                       Intel Z97 Chipset LPC Controller
+                       Intel Xeon E3-1200 v3/4th Gen Core Processor PCI Express x16 Controller
+                       Intel 4th Gen Core Processor DRAM Controller
+                       Intel 9 Series Chipset Family PCI Express Root Port 5
+hub:
+                       Intel Hub
+                       Linux Foundation 2.0 root hub
+                       Linux Foundation 3.0 root hub
+                       Linux Foundation 2.0 root hub
+                       Intel Hub
+                       Linux Foundation 2.0 root hub
+memory:
+                       Main Memory
+unknown:
+                       Intel 9 Series Chipset Family ME Interface #1
+                       Intel 9 Series Chipset Family SMBus Controller
