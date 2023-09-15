@@ -1,78 +1,94 @@
 #NODE SERVER
 
-bv@nodev2:~$ hwinfo --short --cpu --disk
+bv@nodev2:~$ hwinfo --cpu --memory --disk --gfxcard --pci --usb --short
 cpu:
-                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2966 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
                        AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
                        AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
                        AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
                        AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
                        AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 3895 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
                        AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 4644 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
                        AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
+keyboard:
+  /dev/input/event2    Logitech G513 RGB MECHANICAL GAMING KEYBOARD
+graphics card:
+                       nVidia GP107GL [Quadro P400]
+sound:
+                       nVidia GP107GL High Definition Audio Controller
+                       AMD Starship/Matisse HD Audio Controller
+storage:
+                       Samsung Electronics NVMe SSD Controller SM981/PM981/PM983
+                       Samsung Electronics NVMe SSD Controller SM981/PM981/PM983
+                       Kingston Technology Company Non-Volatile memory controller
+                       AMD SATA controller
+network:
+  enp10s0              Realtek RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
 disk:
-  /dev/nvme1n1         Kingston Technology Company Disk
+  /dev/sdf             Realtek RTL9210 NVME
   /dev/nvme0n1         Samsung Electronics NVMe SSD Controller SM981/PM981/PM983
-  /dev/nvme2n1         Samsung Electronics NVMe SSD Controller SM981/PM981/PM983
   /dev/sdd             Samsung SSD 870
   /dev/sdb             Samsung SSD 870
+  /dev/nvme2n1         Samsung Electronics NVMe SSD Controller SM981/PM981/PM983
+  /dev/sde             Realtek RTL9210 NVME
   /dev/sdc             Samsung SSD 870
+  /dev/nvme1n1         Kingston Technology Company Disk
   /dev/sda             Samsung SSD 870
-  
-bv@nodev2:~$ hwinfo --memory
-01: None 00.0: 10102 Main Memory
-  [Created at memory.74]
-  Unique ID: rdCR.CxwsZFjVASF
-  Hardware Class: memory
-  Model: "Main Memory"
-  Memory Range: 0x00000000-0xfadcd1fff (rw)
-  Memory Size: 64 GB
-  Config Status: cfg=new, avail=yes, need=no, active=unknown
-  
-bv@nodev2:~$ hwinfo --gfxcard
-17: PCI b00.0: 0300 VGA compatible controller (VGA)
-  [Created at pci.386]
-  Hardware Class: graphics card
-  Model: "nVidia GP107GL [Quadro P400]"
-  Vendor: pci 0x10de "nVidia Corporation"
-  Device: pci 0x1cb3 "GP107GL [Quadro P400]"
-  Driver: "nouveau"
-  Driver Modules: "nouveau"
-  Driver Info #0:
-    Driver Status: nvidiafb is not active
-    Driver Activation Cmd: "modprobe nvidiafb"
-  Driver Info #1:
-    Driver Status: nouveau is active
-    Driver Activation Cmd: "modprobe nouveau"
-  Config Status: cfg=new, avail=yes, need=no, active=unknown
-  Attached to: #7 (PCI bridge)
-  
-bv@nodev2:~$ hwinfo --sys --bios
-01: None 00.0: 10105 BIOS
-  [Created at bios.186]
-  Unique ID: rdCR.lZF+r4EgHp4
-  Hardware Class: bios
-  BIOS Keyboard LED Status:
-    Scroll Lock: off
-    Num Lock: off
-    Caps Lock: off
-  Config Status: cfg=new, avail=yes, need=no, active=unknown
-
-02: None 00.0: 10107 System
-  [Created at sys.64]
-  Unique ID: rdCR.n_7QNeEnh23
-  Hardware Class: system
-  Model: "System"
-  Formfactor: "desktop"
-  Driver Info #0:
-    Driver Status: thermal,fan are not active
-    Driver Activation Cmd: "modprobe thermal; modprobe fan"
-  Config Status: cfg=new, avail=yes, need=no, active=unknown
+                       Realtek RTL9210
+usb controller:
+                       AMD USB Controller
+                       AMD Matisse USB 3.0 Host Controller
+bridge:
+                       AMD PCI bridge
+                       AMD Starship/Matisse GPP Bridge
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD Matisse Device 24: Function 3
+                       AMD PCI bridge
+                       AMD Starship/Matisse GPP Bridge
+                       AMD PCI bridge
+                       AMD Matisse Device 24: Function 1
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD PCI bridge
+                       AMD FCH LPC Bridge
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD PCI bridge
+                       AMD Matisse Device 24: Function 6
+                       AMD Starship/Matisse Root Complex
+                       AMD Starship/Matisse Internal PCIe GPP Bridge 0 to bus[E:B]
+                       AMD Matisse Device 24: Function 4
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD PCI bridge
+                       AMD Matisse Device 24: Function 2
+                       AMD Starship/Matisse GPP Bridge
+                       AMD PCI bridge
+                       AMD Matisse Device 24: Function 0
+                       AMD PCI bridge
+                       AMD Starship/Matisse Internal PCIe GPP Bridge 0 to bus[E:B]
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD Matisse Device 24: Function 7
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD Matisse Device 24: Function 5
+hub:
+                       Linux Foundation 2.0 root hub
+                       Linux Foundation 3.0 root hub
+                       Linux Foundation 2.0 root hub
+                       Linux Foundation 3.0 root hub
+memory:
+                       Main Memory
+unknown:
+                       AMD Starship/Matisse PCIe Dummy Function
+                       AMD Starship/Matisse Cryptographic Coprocessor PSPCPP
+                       AMD Starship/Matisse IOMMU
+                       AMD Starship/Matisse Reserved SPP
+                       AMD FCH SMBus Controller
+                       ASUSTek AURA LED Controller
+  /dev/input/event3    Logitech G513 RGB MECHANICAL GAMING KEYBOARD
