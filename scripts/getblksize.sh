@@ -7,19 +7,21 @@
 # Temporary file to hold individual downloaded sizes
 temp_file=$(mktemp)
 
-# Function to fetch block and write its size to temp_file
 fetch_block() {
-local rpc=$1
-local height=$2
-local response=$(curl -s "$rpc/block?height=$height")
-local size=$(echo -n "$response" | wc -c)
+    local rpc=$1
+    local height=$2
+    local response=$(curl -s "$rpc/block?height=$height")
+    local size=$(echo -n "$response" | wc -c)
 
-# Check if the response is in the expected format
-if [[ "$response" == *'{"jsonrpc":"'*'"id":'*'"result":{"block_id":'* ]]; then
-echo $size >> $temp_file
-else
-echo "Skipped block $height due to non-standard format or fetch failure."
-fi
+    # Check if the response contains a "block_id" field or a "header" field, as these are likely mandatory for a valid block.
+    local has_block_id=$(echo "$response" | jq -e '.result.block_id' > /dev/null 2>&1; echo $?)
+    local has_header=$(echo "$response" | jq -e '.result.block.header' > /dev/null 2>&1; echo $?)
+
+    if [[ $has_block_id -eq 0 && $has_header -eq 0 ]]; then
+        echo $size >> $temp_file
+    else
+        echo "Skipped block $height due to non-standard format or fetch failure."
+    fi
 }
 
 export -f fetch_block
