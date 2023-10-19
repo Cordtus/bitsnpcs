@@ -15,17 +15,17 @@ lxc exec $1 -- journalctl -u $1 -f -ocat
 function lxc-ram {
 if [ $1 == "all" ]
 then
-  LIST=($(lxc list -c n -f csv))
-  for x in "${LIST[@]}"
-  do
-    echo -e "\e[1m\e[94m[\e[90m${x}\e[94m]\e[0m"
-    DATA=$(lxc exec $x -- free -h)
-    echo $DATA | head | awk '{printf $1" "$2" \033[33m"$6"\n\033[0m"$8" "$9" \033[33m"$13"\033[0m\n"}'
-  done
+LIST=($(lxc list -c n -f csv))
+for x in "${LIST[@]}"
+do
+echo -e "\e[1m\e[94m[\e[90m${x}\e[94m]\e[0m"
+DATA=$(lxc exec $x -- free -h)
+echo $DATA | head | awk '{printf $1" "$2" \033[33m"$6"\n\033[0m"$8" "$9" \033[33m"$13"\033[0m\n"}'
+done
 else
-  echo -e "\e[1m\e[94m[\e[90m$1\e[94m]\e[0m"
-  DATA=$(lxc exec $1 -- free -h)
-  echo $DATA | head | awk '{printf $1" "$2" \033[33m"$6"\n\033[0m"$8" "$9" \033[33m"$13"\033[0m\n"}'
+echo -e "\e[1m\e[94m[\e[90m$1\e[94m]\e[0m"
+DATA=$(lxc exec $1 -- free -h)
+echo $DATA | head | awk '{printf $1" "$2" \033[33m"$6"\n\033[0m"$8" "$9" \033[33m"$13"\033[0m\n"}'
 fi
 }
 
