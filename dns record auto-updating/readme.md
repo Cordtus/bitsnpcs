@@ -5,11 +5,16 @@
 # 1. fetch dns record data
 
 ## fetch zone & record ids, print and save to `zones_with_records.json`
-- create new file `records.sh` [below]
-- make executable `chmod +x records.sh`<br>
+- create new file [see below]<br>
+`$ nano records.sh`
+
+- make executable<br>
+`$ chmod +x records.sh`
+
 - run with cloudflare account email and API token with adequate permissions as args<br>
-`./records.sh your@email.com v9L2cunM4BbMr4Vu-1Npqwm7Dm9yF5EidbWa8-iY`
-- interactive - select zone(s) at prompt
+`$ ./records.sh your@email.com v9L2cunM4BbMr4Vu-1Npqwm7Dm9yF5EidbWa8-iY`
+
+- *interactive* - select zone(s) at prompt<br><br>
 
 ```
 #!/bin/bash
