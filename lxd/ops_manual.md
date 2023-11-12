@@ -162,11 +162,8 @@ devices:
 
 ```
 $ sudo ufw allow in on lxdbr0
-$ sudo ufw allow in on lxdbr0 to any ipv6
 $ sudo ufw route allow in on lxdbr0
-$ sudo ufw route allow in on lxdbr0 to any
-$ sudo ufw route allow in on lxdbr0 from any ipv6
-$ sudo ufw route allow in on lxdbr0 to any ipv6
+$ sudo ufw route allow out on lxdbr0
 ```
 
 <br>
