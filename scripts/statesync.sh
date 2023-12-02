@@ -1,6 +1,6 @@
 #!/bin/bash
-
-SNAP_RPC="http://142.132.157.153:24157"
+RPC=$1
+SNAP_RPC=$RPC
 
 LATEST_HEIGHT=$(curl -s $SNAP_RPC/block | jq -r .result.block.header.height); \
 BLOCK_HEIGHT=$((LATEST_HEIGHT - 2000)); \
