@@ -8,9 +8,9 @@ import base64
 
 
 # Replace with your Bitcoin Core RPC credentials and node details
-rpc_user = "nomic"
-rpc_password = "soon"
-rpc_url = "http://localhost:18332"
+rpc_user = "xxxxx"
+rpc_password = "xxx"
+rpc_url = "xxxxx"
 
 # Create an argument parser to accept the TxID as an argument
 parser = argparse.ArgumentParser(description="Query Bitcoin Transaction Information by TxID")
