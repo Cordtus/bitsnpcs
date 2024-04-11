@@ -1,0 +1,10 @@
+# add to ~/.bashrc
+# nonce show displays current [presumably wrong] value
+# nonce set will set new value
+
+function nonce_set() {
+        printf "%016X" $@ | xxd -r -u -ps > ~/.orga-wallet/nonce
+}
+function nonce_show() {
+        printf "%d\n" "0x$(xxd -ps ~/.orga-wallet/nonce)"
+}
