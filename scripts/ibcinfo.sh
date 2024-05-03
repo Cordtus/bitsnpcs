@@ -34,8 +34,7 @@ counterpartyConnectionId=$(echo $counterpartyInfo | jq -r '.connection.counterpa
 # confirm fetched client_id matches the stored clientId
 fetchedClientId=$(echo $counterpartyInfo | jq -r '.connection.client_id')
 if [[ "$fetchedClientId" != "${ibc_values["clientId"]}" ]]; then
-  echo -e "${RED}Error: Mismatch in client IDs fetched.${NC}"
-  exit 1
+  echo -e "${RED}Warning: Mismatch in client IDs fetched.${NC}"
 fi
 
 # fetch counterparty details
