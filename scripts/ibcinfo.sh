@@ -1,5 +1,6 @@
 #!/bin/bash
-# execute script, provide REST/LCD URL and IBC channel-id and it will fetch all associated client/connection/channel id's for self and counterparty
+# execute script, provide REST/LCD URL and IBC channel-id and it will fetch all associated
+# client/connection/channel id's for self and counterparty
 # ANSI color codes
 YELLOW='\033[1;33m'
 GREEN='\033[1;32m'
