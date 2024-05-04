@@ -1,66 +1,83 @@
 #!/bin/bash
-# execute script, provide REST/LCD URL and IBC channel-id and it will fetch all associated
-# client/connection/channel id's for self and counterparty
+
 # ANSI color codes
 YELLOW='\033[1;33m'
 GREEN='\033[1;32m'
 RED='\033[1;31m'
 NC='\033[0m' # No Color
 
-# array to hold the values
-declare -A ibc_values
+# remove trailing slashes from URL
+sanitize_url() {
+  echo "$1" | sed 's:/*$::'
+}
 
-# rompt for REST address and channel ID
-echo -e "${YELLOW}Enter REST API address: ${NC}"
-read -p "" restAddress
+# make API request
+fetch_data() {
+  local url=$1
+  local data=$(curl -s --fail "$url")
+  if [[ $? -ne 0 ]]; then
+    echo -e "${RED}Error fetching data from $url${NC}"
+    exit 1
+  fi
+  echo "$data"
+}
+
+# validate inputs (channel ID, port ID)
+validate_id() {
+  if ! [[ $1 =~ ^[a-zA-Z]+-[0-9]{1,5}$ ]]; then
+    echo -e "${RED}Invalid format for $2. Expecting format like 'xxx-0' where 'xxx' can be 'channel', 'connection', or 'client' followed by up to 5 digits.${NC}"
+    exit 1
+  fi
+}
+
+# prompt for REST address
+echo -e "${YELLOW}Enter REST API address (without trailing slash): ${NC}"
+read -r restAddress
+restAddress=$(sanitize_url "$restAddress")
+
+# prompt for channel ID
 echo -e "${YELLOW}Enter channel ID: ${NC}"
-read -p "" channelId
+read -r channelId
+validate_id "$channelId" "channel ID"
 
-# store initial channelId
-ibc_values["channelId"]=$channelId
-
-# fetch client ID
-clientId=$(curl -s "${restAddress}/ibc/core/channel/v1/channels/${channelId}/ports/transfer/client_state" | jq -r '.identified_client_state.client_id')
-ibc_values["clientId"]=$clientId
-
-# fetch connection ID
-connectionId=$(curl -s "${restAddress}/ibc/core/connection/v1/client_connections/${clientId}" | jq -r '.connection_paths[0]')
-ibc_values["connectionId"]=$connectionId
-
-# fetch counterparty client and connection IDs
-counterpartyInfo=$(curl -s "${restAddress}/ibc/core/connection/v1/connections/${connectionId}" | jq)
-counterpartyClientId=$(echo $counterpartyInfo | jq -r '.connection.counterparty.client_id')
-counterpartyConnectionId=$(echo $counterpartyInfo | jq -r '.connection.counterparty.connection_id')
-
-# confirm fetched client_id matches the stored clientId
-fetchedClientId=$(echo $counterpartyInfo | jq -r '.connection.client_id')
-if [[ "$fetchedClientId" != "${ibc_values["clientId"]}" ]]; then
-  echo -e "${RED}Warning: Mismatch in client IDs fetched.${NC}"
+# prompt for port ID - default 'transfer'
+echo -e "${YELLOW}Enter port ID (default: 'transfer'): ${NC}"
+read -r portId
+if [[ -z "$portId" ]]; then
+    portId="transfer"
 fi
 
-# fetch counterparty details
-ibc_values["counterparty_clientId"]=$counterpartyClientId
-ibc_values["counterparty_connectionId"]=$counterpartyConnectionId
+# fetch channel
+channelData=$(fetch_data "${restAddress}/ibc/core/channel/v1/channels/${channelId}/ports/${portId}")
+counterpartyChannelId=$(echo "$channelData" | jq -r '.channel.counterparty.channel_id')
+connectionId=$(echo "$channelData" | jq -r '.channel.connection_hops[0]')
 
-# fetch the counterparty channel ID using the stored connectionId
-counterpartyChannelInfo=$(curl -s "${restAddress}/ibc/core/channel/v1/connections/${connectionId}/channels" | jq)
-counterpartyChannelId=$(echo $counterpartyChannelInfo | jq -r '.channels[0].counterparty.channel_id')
+# fetch connection
+connectionData=$(fetch_data "${restAddress}/ibc/core/connection/v1/connections/${connectionId}")
+clientId=$(echo "$connectionData" | jq -r '.connection.client_id')
+counterpartyClientId=$(echo "$connectionData" | jq -r '.connection.counterparty.client_id')
+counterpartyConnectionId=$(echo "$connectionData" | jq -r '.connection.counterparty.connection_id')
 
-# fetch counterparty channel ID
-ibc_values["counterparty_channelId"]=$counterpartyChannelId
+# check for errors in outputs
+if ! [[ $clientId =~ ^[0-9]+-tendermint-[0-9]{1,5}$ ]]; then
+  echo -e "${RED}Unexpected format in fetched client ID. Received: $clientId${NC}"
+fi
 
-# prepare and order JSON output
-json_output="{"
-json_output+="\"clientId\":\"${ibc_values["clientId"]}\","
-json_output+="\"channelId\":\"${ibc_values["channelId"]}\","
-json_output+="\"connectionId\":\"${ibc_values["connectionId"]}\","
-json_output+="\"counterparty_clientId\":\"${ibc_values["counterparty_clientId"]}\","
-json_output+="\"counterparty_channelId\":\"${ibc_values["counterparty_channelId"]}\","
-json_output+="\"counterparty_connectionId\":\"${ibc_values["counterparty_connectionId"]}\""
-json_output+="}"
+# prepare JSON output
+json_output=$(jq -n --arg channelId "$channelId" \
+                      --arg clientId "$clientId" \
+                      --arg connectionId "$connectionId" \
+                      --arg counterpartyChannelId "$counterpartyChannelId" \
+                      --arg counterpartyClientId "$counterpartyClientId" \
+                      --arg counterpartyConnectionId "$counterpartyConnectionId" \
+  '{
+    channelId: $channelId,
+    clientId: $clientId,
+    connectionId: $connectionId,
+    counterparty_channelId: $counterpartyChannelId,
+    counterparty_clientId: $counterpartyClientId,
+    counterparty_connectionId: $counterpartyConnectionId
+  }')
 
-# prettify JSON output
-pretty_json=$(echo $json_output | jq .)
-
-# print pretty JSON
-echo -e "${GREEN}$pretty_json${NC}"
+# print pretty
+echo -e "${GREEN}${json_output}${NC}"
