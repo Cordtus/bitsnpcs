@@ -4,7 +4,6 @@
 # remembers last-entered values for first 2 args
 # payload "test" set as alias for '{"a":"b"}' to return valid query methods
 
-
 # File to store the last used values
 config_file="last_run.conf"
 
@@ -27,23 +26,14 @@ restAddress=$(get_input "Enter the REST API address" "$restAddress")
 # Prompt for contractAddress
 contractAddress=$(get_input "Enter the contract address" "$contractAddress")
 
-# Prompt for payload and validate JSON
-while true; do
-    payLoad=$(get_input "Enter the payload (valid JSON or 'test' for default)" "$payLoad")
+# Prompt for payload and check if input is 'test'
+payLoad=$(get_input "Enter the payload (or 'test' for default)" "$payLoad")
+if [ "$payLoad" == "test" ]; then
+    payLoad='{"a":"b"}'
+fi
 
-    # Check if input is 'test' and replace with '{"a":"b"}'
-    if [ "$payLoad" == "test" ]; then
-        payLoad='{"a":"b"}'
-    fi
-
-    # Validate JSON using jq
-    if echo "$payLoad" | jq empty 2>/dev/null; then
-        payLoad_base64=$(echo "$payLoad" | base64 -w 0) # -w 0 to disable line wrapping
-        break
-    else
-        echo "Invalid JSON, please try again."
-    fi
-done
+# Encode payload to base64
+payLoad_base64=$(echo "$payLoad" | base64 -w 0) # -w 0 to disable line wrapping
 
 # Save the latest inputs
 echo "restAddress='$restAddress'" > $config_file
@@ -64,5 +54,5 @@ if [ "$http_code" -eq 200 ]; then
     echo "$response_body" | jq .
 else
     echo "Error: HTTP status $http_code"
-    echo "$response_body" | jq .
+    echo "$response_body"
 fi
