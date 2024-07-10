@@ -22,11 +22,20 @@ GO_VERSION="1.20"
 GO_URL="https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz"
 INSTALL_DIR="/usr/local"
 GO_TAR="go${GO_VERSION}.linux-amd64.tar.gz"
+CHECKSUM_URL="https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz.sha256"
+CHECKSUM_FILE="go${GO_VERSION}.linux-amd64.tar.gz.sha256"
 
 if ! command -v go &> /dev/null; then
-    wget -q ${GO_URL}
-    tar -C ${INSTALL_DIR} -xzf ${GO_TAR}
-    rm ${GO_TAR}
+    curl -fsSL -o ${GO_TAR} ${GO_URL}
+    curl -fsSL -o ${CHECKSUM_FILE} ${CHECKSUM_URL}
+    sha256sum -c ${CHECKSUM_FILE}
+    if [ $? -eq 0 ]; then
+        tar -C ${INSTALL_DIR} -xzf ${GO_TAR}
+        rm ${GO_TAR} ${CHECKSUM_FILE}
+    else
+        echo "Checksum verification failed. Exiting."
+        exit 1
+    fi
 fi
 
 # Add Go environment variables to .bashrc if not already present
