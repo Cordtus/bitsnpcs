@@ -25,7 +25,8 @@ fetch_data() {
 # validate inputs (channel ID, port ID)
 validate_id() {
   if ! [[ $1 =~ ^[a-zA-Z]+-[0-9]{1,5}$ ]]; then
-    echo -e "${RED}Invalid format for $2. Expecting format like 'xxx-0' where 'xxx' can be 'channel', 'connection', or 'client' followed by up to 5 digits.${NC}"
+    echo -e "${RED}Invalid format for $2. Expecting format like 'xxx-0' where 'xxx' can be 'channel', 'connection', or 'cli
+ent' followed by up to 5 digits.${NC}"
     exit 1
   fi
 }
@@ -71,12 +72,12 @@ json_output=$(jq -n --arg channelId "$channelId" \
                       --arg counterpartyClientId "$counterpartyClientId" \
                       --arg counterpartyConnectionId "$counterpartyConnectionId" \
   '{
-    channelId: $channelId,
-    clientId: $clientId,
-    connectionId: $connectionId,
-    counterparty_channelId: $counterpartyChannelId,
-    counterparty_clientId: $counterpartyClientId,
-    counterparty_connectionId: $counterpartyConnectionId
+    client_id: $clientId,
+    connection_id: $connectionId,
+    counterparty_client_id: $counterpartyClientId,
+    counterparty_connection_id: $counterpartyConnectionId,
+    channel_id: $channelId,
+    counterparty_channel_id: $counterpartyChannelId
   }')
 
 # print pretty
