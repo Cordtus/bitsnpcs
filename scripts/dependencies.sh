@@ -18,7 +18,7 @@ apt-get update -qq && apt-get upgrade -y -qq
 apt-get install -y -qq nano make build-essential gcc git jq chrony tar curl lz4 wget
 
 # Install Go if it's not installed
-GO_VERSION="1.20"
+GO_VERSION="1.22.5"
 GO_URL="https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz"
 INSTALL_DIR="/usr/local"
 GO_TAR="go${GO_VERSION}.linux-amd64.tar.gz"
