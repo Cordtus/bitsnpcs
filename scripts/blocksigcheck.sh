@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Function to check if a command exists, and install it if it doesn't
 ensure_command() {
     if ! command -v $1 &> /dev/null; then
         echo "$1 could not be found. Installing..."
