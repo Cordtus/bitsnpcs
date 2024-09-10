@@ -1,25 +1,23 @@
 #NODE SERVER
 
 bv@nodev2:~$ hwinfo --cpu --memory --disk --gfxcard --pci --usb --short
-cpu:
+cpu:                                                            
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 4489 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 4520 MHz
                        AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
                        AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 2966 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-                       AMD Ryzen 7 5800X 8-Core Processor, 3800 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 4418 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 4406 MHz
                        AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
                        AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
                        AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
                        AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
-keyboard:
-  /dev/input/event2    Logitech G513 RGB MECHANICAL GAMING KEYBOARD
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
+                       AMD Ryzen 7 5800X 8-Core Processor, 2200 MHz
 graphics card:
                        nVidia GP107GL [Quadro P400]
 sound:
@@ -33,23 +31,58 @@ storage:
 network:
   enp10s0              Realtek RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
 disk:
-  /dev/sdf             Realtek RTL9210 NVME
   /dev/nvme0n1         Samsung Electronics NVMe SSD Controller SM981/PM981/PM983
   /dev/sdd             Samsung SSD 870
   /dev/sdb             Samsung SSD 870
   /dev/nvme2n1         Samsung Electronics NVMe SSD Controller SM981/PM981/PM983
-  /dev/sde             Realtek RTL9210 NVME
   /dev/sdc             Samsung SSD 870
   /dev/nvme1n1         Kingston Technology Company Disk
   /dev/sda             Samsung SSD 870
-                       Realtek RTL9210
 usb controller:
                        AMD USB Controller
                        AMD Matisse USB 3.0 Host Controller
+bridge:
+                       AMD PCI bridge
+                       AMD Starship/Matisse GPP Bridge
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD Matisse Device 24: Function 3
+                       AMD PCI bridge
+                       AMD Starship/Matisse GPP Bridge
+                       AMD PCI bridge
+                       AMD Matisse Device 24: Function 1
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD PCI bridge
+                       AMD FCH LPC Bridge
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD PCI bridge
+                       AMD Matisse Device 24: Function 6
+                       AMD Starship/Matisse Root Complex
+                       AMD Starship/Matisse Internal PCIe GPP Bridge 0 to bus[E:B]
+                       AMD Matisse Device 24: Function 4
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD PCI bridge
+                       AMD Matisse Device 24: Function 2
+                       AMD Starship/Matisse GPP Bridge
+                       AMD PCI bridge
+                       AMD Matisse Device 24: Function 0
+                       AMD PCI bridge
+                       AMD Starship/Matisse Internal PCIe GPP Bridge 0 to bus[E:B]
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD Matisse Device 24: Function 7
+                       AMD Starship/Matisse PCIe Dummy Host Bridge
+                       AMD Matisse Device 24: Function 5
+hub:
+                       Linux Foundation 2.0 root hub
+                       Linux Foundation 3.0 root hub
+                       Linux Foundation 2.0 root hub
+                       Linux Foundation 3.0 root hub
 memory:
-                       Hardware Class: memory
-                       Model: "Main Memory"
-                       Memory Range: 0x00000000-0x1f6d081fff (rw)
-                       Memory Size: 128 GB
+                       Main Memory
 unknown:
-  /dev/input/event3    Logitech G513 RGB MECHANICAL GAMING KEYBOARD
+                       AMD Starship/Matisse PCIe Dummy Function
+                       AMD Starship/Matisse Cryptographic Coprocessor PSPCPP
+                       AMD Starship/Matisse IOMMU
+                       AMD Starship/Matisse Reserved SPP
+                       AMD FCH SMBus Controller
+                       ASUSTek AURA LED Controller
