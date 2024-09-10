@@ -1,19 +1,19 @@
-cpu:
+cpu:                                                            
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 4400 MHz
                        Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 800 MHz
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 2800 MHz
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 1700 MHz
                        Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 800 MHz
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 800 MHz
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 2800 MHz
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 800 MHz
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 800 MHz
-                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 3800 MHz
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 4400 MHz
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 4400 MHz
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 3700 MHz
+                       Intel(R) Core(TM) i7-4790K CPU @ 4.00GHz, 4400 MHz
 graphics card:
                        nVidia VGA compatible controller
 sound:
                        Intel 9 Series Chipset Family HD Audio Controller
                        nVidia Audio device
 storage:
-                       Sandisk Non-Volatile memory controller
+                       Samsung Electronics NVMe SSD Controller SM981/PM981/PM983
                        Intel 9 Series Chipset Family SATA Controller [AHCI Mode]
                        Kingston Technology Company Non-Volatile memory controller
 network:
@@ -23,7 +23,7 @@ disk:
   /dev/sdd             ST8000DM004-2CX1
   /dev/sdb             TOSHIBA MG07ACA1
   /dev/sdc             TOSHIBA MG07ACA1
-  /dev/nvme1n1         Sandisk Disk
+  /dev/nvme1n1         Samsung Electronics NVMe SSD Controller SM981/PM981/PM983
   /dev/sda             ST8000DM004-2CX1
 usb controller:
                        Intel 9 Series Chipset Family USB EHCI Controller #2
