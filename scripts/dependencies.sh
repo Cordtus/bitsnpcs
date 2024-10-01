@@ -11,8 +11,15 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-# Prompt the user to enter the Go version to install
-read -p "Enter the Go version you want to install (e.g., 1.22.4): " GO_VERSION
+# Prompt the user to enter the Go version to install, or use "latest" if left blank
+read -p "Enter the Go version you want to install (e.g., 1.22.4) or press Enter for the latest version: " GO_VERSION
+
+# Determine the latest version if not specified by the user
+if [ -z "$GO_VERSION" ]; then
+    echo "Fetching the latest Go version..."
+    GO_VERSION=$(curl -fsSL https://go.dev/VERSION?m=text | sed 's/go//')
+    echo "Latest Go version is ${GO_VERSION}"
+fi
 
 # Update and upgrade packages silently
 echo "Updating and upgrading system packages..."
@@ -36,16 +43,22 @@ GO_TAR="go${GO_VERSION}.linux-amd64.tar.gz"
 CHECKSUM_URL="https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz.sha256"
 CHECKSUM_FILE="go${GO_VERSION}.linux-amd64.tar.gz.sha256"
 
-echo "Installing Go ${GO_VERSION}..."
-curl -fsSL -o ${GO_TAR} ${GO_URL}
-curl -fsSL -o ${CHECKSUM_FILE} ${CHECKSUM_URL}
-sha256sum -c ${CHECKSUM_FILE}
+# Ensure the Go version exists before proceeding
+if curl --output /dev/null --silent --head --fail "${GO_URL}"; then
+    echo "Installing Go ${GO_VERSION}..."
+    curl -fsSL -o ${GO_TAR} ${GO_URL}
+    curl -fsSL -o ${CHECKSUM_FILE} ${CHECKSUM_URL}
+    sha256sum -c ${CHECKSUM_FILE}
 
-if [ $? -eq 0 ]; then
-    tar -C ${INSTALL_DIR} -xzf ${GO_TAR}
-    rm ${GO_TAR} ${CHECKSUM_FILE}
+    if [ $? -eq 0 ]; then
+        tar -C ${INSTALL_DIR} -xzf ${GO_TAR}
+        rm ${GO_TAR} ${CHECKSUM_FILE}
+    else
+        echo "Checksum verification failed. Exiting."
+        exit 1
+    fi
 else
-    echo "Checksum verification failed. Exiting."
+    echo "Go version ${GO_VERSION} not found. Exiting."
     exit 1
 fi
 
