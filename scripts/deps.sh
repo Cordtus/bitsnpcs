@@ -1,12 +1,12 @@
 #!/bin/bash
 # Script intended for new Debian system/vm/container
-# Installs common Cosmos SDK dependencies, QOL tools, sets PATH/GOPATH+
+# Installs common Cosmos SDK dependencies, QOL tools, sets PATH/GOPATH+, optionally installs Rust.
 
 # Exit if any command fails
 set -e
 
 # Ensure the script is run as root
-if [ "$(id -u)" -ne 0 ]; then
+if [ "$(id -u)" -ne 0; then
     echo "This script must be run as root. Exiting."
     exit 1
 fi
@@ -73,6 +73,24 @@ for var in "${ENV_VARS[@]}"; do
     grep -qxF "${var}" ~/.bashrc || echo "${var}" >> ~/.bashrc
 done
 
+# Prompt the user for Rust installation
+read -p "Do you want to install the Rust environment (rustup)? (y/n): " INSTALL_RUST
+
+if [ "$INSTALL_RUST" = "y" ]; then
+    echo "Installing Rust environment..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    source "$HOME/.cargo/env"
+    
+    # Add Rust environment variables to .bashrc if not already present
+    grep -qxF "source \$HOME/.cargo/env" ~/.bashrc || echo "source \$HOME/.cargo/env" >> ~/.bashrc
+    echo "Rust environment installation complete."
+else
+    echo "Skipping Rust environment installation."
+fi
+
 # Notify the user to reload environment variables
 echo "Go ${GO_VERSION} installation complete."
+if [ "$INSTALL_RUST" = "y" ]; then
+    echo "Rust installation complete."
+fi
 echo "Please log out and back in for environment changes to take effect, or run 'source ~/.bashrc'."
