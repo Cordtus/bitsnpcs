@@ -7,35 +7,46 @@ set -e
 
 # Ensure the script is run as root
 if [ "$(id -u)" -ne 0 ]; then
-    echo "This script must be run as root."
+    echo "This script must be run as root. Exiting."
     exit 1
 fi
 
+# Prompt the user to enter the Go version to install
+read -p "Enter the Go version you want to install (e.g., 1.22.4): " GO_VERSION
+
 # Update and upgrade packages silently
+echo "Updating and upgrading system packages..."
 apt-get update -qq && apt-get upgrade -y -qq
 
 # Install required packages
+echo "Installing required packages..."
 apt-get install -y -qq nano make build-essential gcc git jq chrony tar curl lz4 wget
 
-# Install Go if it's not installed
-GO_VERSION="1.22.5"
+# Check for and remove existing Go installations
+GO_INSTALL_DIR="/usr/local/go"
+if [ -d "$GO_INSTALL_DIR" ]; then
+    echo "Removing existing Go installation..."
+    rm -rf "$GO_INSTALL_DIR"
+fi
+
+# Download and install the selected Go version
 GO_URL="https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz"
 INSTALL_DIR="/usr/local"
 GO_TAR="go${GO_VERSION}.linux-amd64.tar.gz"
 CHECKSUM_URL="https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz.sha256"
 CHECKSUM_FILE="go${GO_VERSION}.linux-amd64.tar.gz.sha256"
 
-if ! command -v go &> /dev/null; then
-    curl -fsSL -o ${GO_TAR} ${GO_URL}
-    curl -fsSL -o ${CHECKSUM_FILE} ${CHECKSUM_URL}
-    sha256sum -c ${CHECKSUM_FILE}
-    if [ $? -eq 0 ]; then
-        tar -C ${INSTALL_DIR} -xzf ${GO_TAR}
-        rm ${GO_TAR} ${CHECKSUM_FILE}
-    else
-        echo "Checksum verification failed. Exiting."
-        exit 1
-    fi
+echo "Installing Go ${GO_VERSION}..."
+curl -fsSL -o ${GO_TAR} ${GO_URL}
+curl -fsSL -o ${CHECKSUM_FILE} ${CHECKSUM_URL}
+sha256sum -c ${CHECKSUM_FILE}
+
+if [ $? -eq 0 ]; then
+    tar -C ${INSTALL_DIR} -xzf ${GO_TAR}
+    rm ${GO_TAR} ${CHECKSUM_FILE}
+else
+    echo "Checksum verification failed. Exiting."
+    exit 1
 fi
 
 # Add Go environment variables to .bashrc if not already present
@@ -49,5 +60,6 @@ for var in "${ENV_VARS[@]}"; do
     grep -qxF "${var}" ~/.bashrc || echo "${var}" >> ~/.bashrc
 done
 
-# Note to user
+# Notify the user to reload environment variables
+echo "Go ${GO_VERSION} installation complete."
 echo "Please log out and back in for environment changes to take effect, or run 'source ~/.bashrc'."
