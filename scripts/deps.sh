@@ -1,12 +1,10 @@
 #!/bin/bash
-# Script intended for new Debian system/vm/container
-# Installs common Cosmos SDK dependencies, QOL tools, sets PATH/GOPATH+, optionally installs Rust.
 
-# Exit if any command fails
-set -e
+# Temporarily disable exit on error to allow full script execution for debugging
+set +e
 
 # Ensure the script is run as root
-if [ "$(id -u)" -ne 0; then
+if [ "$(id -u)" -ne 0 ]; then
     echo "This script must be run as root. Exiting."
     exit 1
 fi
@@ -17,8 +15,24 @@ read -p "Enter the Go version you want to install (e.g., 1.22.4) or press Enter 
 # Determine the latest version if not specified by the user
 if [ -z "$GO_VERSION" ]; then
     echo "Fetching the latest Go version..."
-    GO_VERSION=$(curl -fsSL https://go.dev/VERSION?m=text | sed 's/go//')
+    GO_VERSION=$(curl -fsSL https://go.dev/VERSION?m=text | grep -o 'go[0-9]\+\.[0-9]\+\.[0-9]\+' | head -n 1)
+
+    # Ensure that the response is a valid version
+    if ! [[ "$GO_VERSION" =~ ^go[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        echo "Error: Failed to retrieve a valid Go version. Exiting."
+        exit 1
+    fi
+
     echo "Latest Go version is ${GO_VERSION}"
+fi
+
+# Remove the 'go' prefix for further processing
+GO_VERSION="${GO_VERSION#go}"
+
+# Validate the GO_VERSION variable before proceeding
+if ! [[ "$GO_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    echo "Error: Invalid Go version specified. Exiting."
+    exit 1
 fi
 
 # Update and upgrade packages silently
@@ -36,42 +50,75 @@ if [ -d "$GO_INSTALL_DIR" ]; then
     rm -rf "$GO_INSTALL_DIR"
 fi
 
-# Download and install the selected Go version
-GO_URL="https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz"
-INSTALL_DIR="/usr/local"
+# Construct the URLs for the Go tarball and checksum
+GO_URL="https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz"
+CHECKSUM_URL="https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz.sha256"
+
 GO_TAR="go${GO_VERSION}.linux-amd64.tar.gz"
-CHECKSUM_URL="https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz.sha256"
 CHECKSUM_FILE="go${GO_VERSION}.linux-amd64.tar.gz.sha256"
 
-# Ensure the Go version exists before proceeding
-if curl --output /dev/null --silent --head --fail "${GO_URL}"; then
-    echo "Installing Go ${GO_VERSION}..."
-    curl -fsSL -o ${GO_TAR} ${GO_URL}
-    curl -fsSL -o ${CHECKSUM_FILE} ${CHECKSUM_URL}
-    sha256sum -c ${CHECKSUM_FILE}
-
-    if [ $? -eq 0 ]; then
-        tar -C ${INSTALL_DIR} -xzf ${GO_TAR}
-        rm ${GO_TAR} ${CHECKSUM_FILE}
-    else
-        echo "Checksum verification failed. Exiting."
-        exit 1
-    fi
-else
-    echo "Go version ${GO_VERSION} not found. Exiting."
+# Download the Go tarball and checksum file
+echo "Downloading Go tarball..."
+curl -fsSL -o "${GO_TAR}" "${GO_URL}"
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to download Go tarball. Exiting."
     exit 1
 fi
 
-# Add Go environment variables to .bashrc if not already present
+echo "Downloading checksum..."
+curl -fsSL -o "${CHECKSUM_FILE}" "${CHECKSUM_URL}"
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to download checksum file. Exiting."
+    exit 1
+fi
+
+# Extract the checksum value manually
+CHECKSUM=$(awk '{print $1}' "${CHECKSUM_FILE}")
+FILE_CHECKSUM=$(sha256sum "${GO_TAR}" | awk '{print $1}')
+
+# Compare the checksums
+if [ "${CHECKSUM}" == "${FILE_CHECKSUM}" ]; then
+    echo "Checksum verification passed."
+    tar -C /usr/local -xzf "${GO_TAR}"
+    rm "${GO_TAR}" "${CHECKSUM_FILE}"
+else
+    echo "Checksum verification failed."
+    echo "Expected: ${CHECKSUM}"
+    echo "Actual: ${FILE_CHECKSUM}"
+    exit 1
+fi
+
+# Remove any previous incorrect PATH or Go-related exports from .bashrc
+sed -i '/export GOROOT/d' ~/.bashrc
+sed -i '/export GOPATH/d' ~/.bashrc
+sed -i '/export GO111MODULE/d' ~/.bashrc
+sed -i '/export PATH=.*go\/bin/d' ~/.bashrc
+sed -i '/export PATH=\$PATH:\/usr\/local\/go\/bin:\/\$HOME\/go\/bin/d' ~/.bashrc
+sed -i '/source "\$HOME\/.cargo\/env"/d' ~/.bashrc
+
+# Add Go environment variables to .bashrc, ensuring they're added only once
+echo "Adding Go environment variables to .bashrc..."
+
 ENV_VARS=(
-    "export GOROOT=${INSTALL_DIR}/go"
+    "export GOROOT=/usr/local/go"
     "export GOPATH=\$HOME/go"
     "export GO111MODULE=on"
-    "export PATH=\$PATH:${INSTALL_DIR}/go/bin:\$HOME/go/bin"
+    "export PATH=\$PATH:/usr/local/go/bin:\$HOME/go/bin"
 )
+
+# Backup .bashrc before modifying it
+cp ~/.bashrc ~/.bashrc.backup
+
+# Ensure the variables are added only once
 for var in "${ENV_VARS[@]}"; do
     grep -qxF "${var}" ~/.bashrc || echo "${var}" >> ~/.bashrc
 done
+
+# Source the updated .bashrc to apply changes
+source ~/.bashrc
+
+# Print message indicating Go installation was successful
+echo "Go ${GO_VERSION} installation complete."
 
 # Prompt the user for Rust installation
 read -p "Do you want to install the Rust environment (rustup)? (y/n): " INSTALL_RUST
