@@ -32,24 +32,33 @@ if [ "$payLoad" == "test" ]; then
     payLoad='{"a":"b"}'
 fi
 
+# Prompt for block height (optional)
+blockHeight=$(get_input "Enter the block height (optional)" "") # Default is empty
+
 # Encode payload to base64
 payLoad_base64=$(echo "$payLoad" | base64 -w 0) # -w 0 to disable line wrapping
 
-# Save the latest inputs
+# Save the latest inputs, excluding blockHeight
 echo "restAddress='$restAddress'" > $config_file
 echo "contractAddress='$contractAddress'" >> $config_file
 echo "payLoad='$payLoad'" >> $config_file
 
-# Build the URL and make the HTTP GET request
+# Build the URL
 url="${restAddress}/cosmwasm/wasm/v1/contract/${contractAddress}/smart/${payLoad_base64}"
-response=$(curl -s --write-out "\n%{http_code}" --url "$url")
+
+# Add header if block height is provided
+if [ -n "$blockHeight" ]; then
+    response=$(curl -s --write-out "\n%{http_code}" --url "$url" -H "x-cosmos-block-height: $blockHeight")
+else
+    response=$(curl -s --write-out "\n%{http_code}" --url "$url")
+fi
 
 # Separate the status code from the response body
 http_code=$(echo "$response" | tail -n1)  # Last line of output is the HTTP status code
 response_body=$(echo "$response" | head -n -1)  # Remove the last line (status code)
 
-# Check if the response is successful
-if [ "$http_code" -eq 200 ]; then
+# Check if the response is successful or expected (200 or 400)
+if [ "$http_code" -eq 200 ] || [ "$http_code" -eq 400 ]; then
     # Print pretty JSON
     echo "$response_body" | jq .
 else
